@@ -137,6 +137,7 @@ function initData (vm: Component) {
         )
       }
     }
+    // 判断data中是否有key与props中重复
     if (props && hasOwn(props, key)) {
       process.env.NODE_ENV !== 'production' && warn(
         `The data property "${key}" is already declared as a prop. ` +
@@ -166,6 +167,11 @@ export function getData (data: Function, vm: Component): any {
 
 const computedWatcherOptions = { lazy: true }
 
+/**
+ * 初始化计算方法
+ * @param {*} vm 
+ * @param {*} computed 
+ */
 function initComputed (vm: Component, computed: Object) {
   // $flow-disable-line
   const watchers = vm._computedWatchers = Object.create(null)
@@ -313,6 +319,10 @@ function createWatcher (
   if (typeof handler === 'string') {
     handler = vm[handler]
   }
+  /**
+   * expOrFn -> key
+   * handler -> fnc
+   */
   return vm.$watch(expOrFn, handler, options)
 }
 
