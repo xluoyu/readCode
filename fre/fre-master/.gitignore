@@ -1,0 +1,11 @@
+/node_modules/
+/.idea/
+/.cache/
+/coverage/
+yarn-error.log
+demo/**/node_modules/
+demo/**/.cache/
+demo/**/dist/
+/dist/
+/**/node_modules/
+.DS_Store
