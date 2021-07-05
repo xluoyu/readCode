@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>page2</h2>
+  <p class="output">hello page2</p>
+</body>
+<script>
+  const output = document.querySelector('.output')
+
+  const onmessage = (e) => {
+    output.innerHTML = e.data
+    console.log(e)
+    // e.ports[0].postMessage('hell from this page2')
+    e.ports[0]()
+  }
+
+  window.addEventListener('message', onmessage)
+
+  
+</script>
+</html>
