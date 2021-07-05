@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  let data = {
+    name: '小明'
+  }
+
+  function defineReactive (obj, key, val) {
+    const property = Object.getOwnPropertyDescriptor(obj, key)
+    const getter = property && property.get
+    const setter = property && property.set
+    if ((!getter || setter) && arguments.length === 2) {
+      val = obj[key]
+    }
+    Object.defineProperty(obj, key, {
+      enumerable: true,
+      configurable: true,
+      get: function reactiveGetter () {
+        console.log('getter', getter)
+        const value = getter ? getter.call(obj) : val
+        return value
+      },
+      set: function reactiveSetter (newVal) {
+        console.log('setter', setter)
+        const value = getter ? getter.call(obj) : val
+        /* eslint-disable no-self-compare */
+        if (newVal === value || (newVal !== newVal && value !== value)) {
+          return
+        }
+        // #7981: for accessor properties without setter
+        if (getter && !setter) return
+        if (setter) {
+          setter.call(obj, newVal)
+        } else {
+          val = newVal
+        }
+      }
+    })
+  }
+  Object.keys(data).forEach(key => {
+    defineReactive(data, key)
+  })
+  Object.keys(data).forEach(key => {
+    defineReactive(data, key)
+  })
+
+  console.log(data.name)
+  data.name = '小红'
+
+  console.log('name' in data)
+</script>
+</html>
