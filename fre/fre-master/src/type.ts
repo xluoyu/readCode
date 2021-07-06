@@ -1,3 +1,5 @@
+import { LANE } from "./reconcile"
+
 export type Key = FreText
 export interface RefObject<T> {
   current: T
@@ -52,7 +54,7 @@ export interface IFiber<P extends Attributes = any> {
   oldProps: P
   after: any
   props: P
-  lane: number
+  lane: number,
   time: number
   e: IFiber,
   first: IFiber,
