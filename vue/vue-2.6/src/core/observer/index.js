@@ -44,6 +44,11 @@ export class Observer {
     this.dep = new Dep()
     this.vmCount = 0
     def(value, '__ob__', this)
+    // 判断值是否为数组
+    /**
+     * 如果是数组，需要先改写数组方法，在对数组进行遍历后执行walk
+     * 否则直接执行walk
+     */
     if (Array.isArray(value)) {
       if (hasProto) {
         protoAugment(value, arrayMethods)
@@ -60,6 +65,7 @@ export class Observer {
    * Walk through all properties and convert them into
    * getter/setters. This method should only be called when
    * value type is Object.
+   * 遍历对象中的属性
    */
   walk (obj: Object) {
     const keys = Object.keys(obj)
@@ -131,7 +137,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
 
 /**
  * Define a reactive property on an Object.
- */
+ */ 
 export function defineReactive (
   obj: Object,
   key: string,
@@ -147,6 +153,9 @@ export function defineReactive (
   }
 
   // cater for pre-defined getter/setters
+  /**
+   * 获取之前绑定过的getter、setter
+   */
   const getter = property && property.get
   const setter = property && property.set
   if ((!getter || setter) && arguments.length === 2) {
