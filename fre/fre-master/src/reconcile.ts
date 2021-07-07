@@ -68,7 +68,10 @@ export const update = (fiber?: IFiber) => {
  * 
  */
 const reconcile = (WIP?: IFiber): boolean => {
-  while (WIP && !shouldYield()) WIP = capture(WIP)
+  while (WIP && !shouldYield()) {
+    WIP = capture(WIP)
+    console.log(73, WIP)
+  }
   if (WIP) return reconcile.bind(null, WIP)
   if (finish) {
     console.log(finish)
@@ -78,7 +81,6 @@ const reconcile = (WIP?: IFiber): boolean => {
   }
   return null
 }
-
 
 /**
  * 判断当前节点是组件(函数类型), 还是常规dom(div、span、p之类)
@@ -165,8 +167,8 @@ export const getKid = (WIP: IFiber) => {
  * 
  */
 const diffKids = (WIP: any, children: FreNode): void => {
-  console.log('-----------开始diff------------')
-  console.log(WIP)
+  // console.log('-----------开始diff------------')
+  // console.log(WIP)
   let aCh = WIP.kids || [], // 首次进入时，WIP没有kids属性
     bCh = (WIP.kids = arrayfy(children) as any),
     aHead = 0,
@@ -181,8 +183,8 @@ const diffKids = (WIP: any, children: FreNode): void => {
     // 不相同 break 抛出
     if (!same(aCh[aTail], bCh[bTail])) break
     // 相同的话走clone
-    console.log('---------------相同----------------')
-    console.log(aCh[aTail], bCh[bTail])
+    // console.log('---------------相同----------------')
+    // console.log(aCh[aTail], bCh[bTail])
     clone(aCh[aTail--], bCh[bTail], LANE.UPDATE, WIP, bTail--)
   }
 
@@ -192,27 +194,27 @@ const diffKids = (WIP: any, children: FreNode): void => {
     // 相同的话向后进行
     aHead++; bHead++
   }
-  console.log('aCh', aCh)
-  console.log('bCh', bCh)
+  // console.log('aCh', aCh)
+  // console.log('bCh', bCh)
 
   if (aHead > aTail) {
     while (bHead <= bTail) {
       // 针对没有aCh
-      console.log('aHead > aTail && bHead <= bTail')
+      // console.log('aHead > aTail && bHead <= bTail')
       let c = bCh[bTail]
       c.lane = LANE.INSERT
       linke(c, WIP, bTail--)
     }
   } else if (bHead > bTail) {
     while (aHead <= aTail) {
-      console.log('bHead > bTail && aHead <= aTail')
+      // console.log('bHead > bTail && aHead <= aTail')
       let c = aCh[aTail--]
       c.lane = LANE.REMOVE
       detach.d = c
       detach = c
     }
   } else {
-    console.log('else')
+    // console.log('else')
     if (!keyed) {
       keyed = {}
       for (let i = aHead; i <= aTail; i++) {
@@ -241,7 +243,7 @@ const diffKids = (WIP: any, children: FreNode): void => {
   }
 
   while (bHead-- > 0) {
-    console.log('bHead-- > 0')
+    // console.log('bHead-- > 0')
     clone(aCh[bHead], bCh[bHead], LANE.UPDATE, WIP, bHead)
   }
 }
