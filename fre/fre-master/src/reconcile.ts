@@ -194,8 +194,6 @@ const diffKids = (WIP: any, children: FreNode): void => {
     // 相同的话向后进行
     aHead++; bHead++
   }
-  // console.log('aCh', aCh)
-  // console.log('bCh', bCh)
 
   if (aHead > aTail) {
     while (bHead <= bTail) {
