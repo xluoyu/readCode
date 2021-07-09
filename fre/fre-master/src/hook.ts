@@ -58,6 +58,7 @@ const effectImpl = (
     hook[0] = cb
     hook[1] = deps
     current.hooks[key].push(hook)
+    console.log(current.hooks)
   }
 }
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="button">添加</div>
+
+  <p>当前的num: <span id="value"></span></p>
+</body>
+<script>
+  const isFn = (x) => typeof x === "function"
+  class Hook {
+    constructor () {
+      this.cursor = 0
+      this.hook = {
+        list: [],
+        effect: [],
+        layout: []
+      }
+    }
+    useState (initState) {
+      return this.useReducer(null, initState)
+    }
+    useReducer (reducer, initState) {
+      const hook = this.getHook(this.cursor++)
+      return [
+        hook.length ? hook[0] : (hook[0] = initState),
+        (value) => {
+          hook[0] = reducer ? reducer(hook[0], value) :
+            isFn(value) ? value(hook[0]) : value
+        }
+      ]
+    }
+    useEffect (cb, deps) {
+      return this.effectImpl(cb, deps, 'effect')
+    }
+
+    effectImpl (cb, deps, key) {
+      const hook = this.getHook(this.cursor++)
+      // if (isCHanged(hook[1], deps)) {
+        hook[0] = cb
+        hook[1] = deps
+      // }
+    }
+
+    getHook (cursor) {
+      if (cursor >= this.hook.list.length) {
+        this.hook.list.push([])
+      }
+      return this.hook.list[cursor]
+    }
+  }
+</script>
+<script>
+  const button = document.querySelector('#button')
+  const value = document.querySelector('#value')
+
+  let component = new Hook()
+  let [num, setNum] = component.useState(0)
+  component.useEffect(() => {
+    value.textContent = num
+  })
+
+  button.addEventListener('click', () => {
+    setNum(num + 1)
+  })
+</script>
+</html>
