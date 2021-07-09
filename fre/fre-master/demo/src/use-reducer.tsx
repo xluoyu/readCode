@@ -1,4 +1,4 @@
-import { render, h, useReducer, useState } from '../../src/index'
+import { render, h, useReducer, useState, useEffect } from '../../src/index'
 
 function d(state, action) {
   switch (action.type) {
@@ -35,6 +35,9 @@ function TestBtn(props) {
   const [value, setValue] = useState('这是测试')
   const [ob1, setOb1] = useState('这是ob1')
   const [ob2, setOb2] = useState('这是ob2')
+  useEffect(() => {
+    console.log(value)
+  })
   return (
     <button style={'color:' + props.color} onClick={() => setValue('我被电击了')}>{value}</button>
   )

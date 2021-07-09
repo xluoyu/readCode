@@ -70,11 +70,10 @@ export const update = (fiber?: IFiber) => {
 const reconcile = (WIP?: IFiber): boolean => {
   while (WIP && !shouldYield()) {
     WIP = capture(WIP)
-    console.log(73, WIP)
+    // console.log(73, WIP)
   }
   if (WIP) return reconcile.bind(null, WIP)
   if (finish) {
-    console.log(finish)
     commit(finish)
     finish = null
     options.done && options.done()
@@ -95,6 +94,7 @@ const capture = (WIP: IFiber): IFiber | undefined => {
   WIP.isComp ? updateHook(WIP) : updateHost(WIP)
   if (WIP.child) return WIP.child
   while (WIP) {
+    console.log(WIP)
     bubble(WIP)
     if (!finish && WIP.lane & LANE.DIRTY) {
       finish = WIP
