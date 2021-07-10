@@ -12,6 +12,8 @@ import {
 } from "./type"
 let cursor = 0
 
+// 初始化组件
+// use方法计数
 export const resetCursor = () => {
   cursor = 0
 }
@@ -25,7 +27,6 @@ export const useReducer = <S, A>(
   initState?: S
 ): [S, Dispatch<A>] => {
   const [hook, current]: [any, IFiber] = getHook<S>(cursor++)
-
   return [
     hook.length === 0 ? (hook[0] = initState) : hook[0],
     (value: A | Dispatch<A>) => {
@@ -57,6 +58,7 @@ const effectImpl = (
     hook[0] = cb
     hook[1] = deps
     current.hooks[key].push(hook)
+    console.log(current.hooks)
   }
 }
 
