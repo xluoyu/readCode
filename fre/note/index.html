@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="button">添加</div>
+
+  <p>当前的num: <span id="value"></span></p>
+</body>
+<script>
+  let effectStack = []
+
+  const setState = (arg) =>{
+    const deps = new Set()
+
+    const getter = () => {
+      const currentRet = effectStack[effectStack.length - 1]
+      if (currentRet) {
+        subscribe(currentRet, deps)
+      }
+      return arg
+    }
+
+    const setter = (val) => {
+      arg = val
+      for (const dep of [...deps]) {
+        dep.execute()
+      }
+    }
+    return [
+      getter,
+      setter
+    ]
+  }
+
+  const useEffect = (callback) => {
+    const execute = () => {
+      clear(effect)
+      effectStack.push(effect)
+      try {
+        callback()
+      } catch (error) {
+        console.error(error)
+        effectStack.pop()
+      }
+    }
+    let effect = {
+      execute,
+      deps: new Set()
+    }
+    execute()
+  }
+
+  const clear = (effect) => {
+    for(const dep of effect.deps) {
+      dep.delete(effect)
+    }
+    effect.deps.clear()
+  }
+  
+  const subscribe = (ef, sub) => {
+    ef.deps.add(sub)
+    sub.add(ef)
+  }
+</script>
+
+<script>
+  const [num, setNum] = setState(0)
+  const button = document.querySelector('#button')
+  const value = document.querySelector('#value')
+
+  useEffect(() => {
+    value.textContent = num()
+  })
+
+  button.addEventListener('click', () => {
+    setNum(num() + 1)
+  })
+</script>
+</html>
