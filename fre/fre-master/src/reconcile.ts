@@ -49,8 +49,12 @@ export const update = (fiber?: IFiber) => {
   }
 }
 
+/**
+ * 开始对dom进行循环
+ */
 const reconcile = (WIP?: IFiber): boolean => {
   while (WIP && !shouldYield()) WIP = capture(WIP)
+  console.log('终端')
   if (WIP) return reconcile.bind(null, WIP)
   if (finish) {
     commit(finish)
@@ -61,6 +65,7 @@ const reconcile = (WIP?: IFiber): boolean => {
 }
 
 const capture = (WIP: IFiber): IFiber | undefined => {
+  // console.log(WIP)
   WIP.isComp = isFn(WIP.type)
   WIP.isComp ? updateHook(WIP) : updateHost(WIP)
   if (WIP.child) return WIP.child
