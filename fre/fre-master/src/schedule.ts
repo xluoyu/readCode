@@ -1,4 +1,6 @@
 /**
+ * 以时间切片的形式执行传入的回调数组
+ * 
  * 入口为schedule
  * 调用schedule传入一个回调函数，将函数添加到queue中
  * 添加一个动态flush(时间切片), 在下一个事件循环中执行(setTimeout || postMessage)
@@ -49,6 +51,7 @@ const postMessage = (() => {
 })()
 
 const flush = (): void => {
+  console.log('切片循环')
   deadline = getTime() + threshold
   let job = peek(queue)
   while (job && !shouldYield()) {

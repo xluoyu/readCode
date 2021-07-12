@@ -91,6 +91,7 @@ const reconcile = (WIP?: IFiber): boolean => {
  * 没有子节点
  */
 const capture = (WIP: IFiber): IFiber | undefined => {
+  // console.log(WIP)
   WIP.isComp = isFn(WIP.type)
   // 执行不同操作
   WIP.isComp ? updateHook(WIP) : updateHost(WIP)
