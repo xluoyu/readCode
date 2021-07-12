@@ -3,10 +3,11 @@ import { updateElement } from "./dom"
 import { getKid, isFn, LANE } from './reconcile'
 
 export const commit = (fiber: IFiber): void => {
+  // console.log('commit', fiber)
   let d = fiber
   let e = d.e
   fiber.e = null
-  do { insert(e) } while (e = e.e)
+  do {console.log(e); insert(e) } while (e = e.e)
   while (d = d.d) remove(d)
   fiber.d = null
 }

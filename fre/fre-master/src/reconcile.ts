@@ -20,11 +20,11 @@ let detach = null
 export let options: any = {}
 
 export const enum LANE {
-  UPDATE = 1 << 1,
-  INSERT = 1 << 2,
-  REMOVE = 1 << 3,
-  SVG = 1 << 4,
-  DIRTY = 1 << 5,
+  UPDATE = 1 << 1, // 2
+  INSERT = 1 << 2, // 4
+  REMOVE = 1 << 3, // 8
+  SVG = 1 << 4, // 16
+  DIRTY = 1 << 5, // 32
 }
 
 // export const enum LANE {
@@ -52,7 +52,8 @@ export const render = (vnode: FreElement | any, node: Node, config?: any): void 
  * 启用时间切片
  */
 export const update = (fiber?: IFiber) => {
-  console.log('update')
+  // console.log('update')
+  // console.log(fiber)
   if (fiber && !(fiber.lane & LANE.DIRTY)) {
     // 对fiber添加lane属性 2 / 32
     fiber.lane = LANE.UPDATE | LANE.DIRTY
@@ -72,6 +73,7 @@ const reconcile = (WIP?: IFiber): boolean => {
     WIP = capture(WIP)
     // console.log(73, WIP)
   }
+  // console.log(WIP)
   if (WIP) return reconcile.bind(null, WIP)
   if (finish) {
     commit(finish)
@@ -92,12 +94,16 @@ const capture = (WIP: IFiber): IFiber | undefined => {
   WIP.isComp = isFn(WIP.type)
   // 执行不同操作
   WIP.isComp ? updateHook(WIP) : updateHost(WIP)
+  console.log('WIPChild', WIP)
   if (WIP.child) return WIP.child
+  // console.log(WIP)
+  console.log('bubbleAfter', WIP)
+
   while (WIP) {
-    console.log(WIP)
+    console.log('bubble', WIP)
     bubble(WIP)
     if (!finish && WIP.lane & LANE.DIRTY) {
-      finish = WIP
+      finish = WIP 
       WIP.lane &= ~LANE.DIRTY
       return null
     }
@@ -107,12 +113,15 @@ const capture = (WIP: IFiber): IFiber | undefined => {
 }
 
 const bubble = (WIP) => {
+  console.log('effect', effect)
+  console.log('---------------------')
   if (WIP.isComp) {
     let kid = getKid(WIP)
     if (kid) {
       kid.s = WIP.sibling
       kid.lane |= WIP.lane
     }
+    console.log('组件', kid)
     invokeHooks(WIP)
   } else {
     WIP.s = WIP.sibling
@@ -131,6 +140,7 @@ const updateHook = <P = Attributes>(WIP: IFiber): void => {
   // WIP.type为组件创建函数
   // 传入props执行创建函数 生成子模块(vdom)
   let children = (WIP.type as FC<P>)(WIP.props)
+  // console.log(children)
   diffKids(WIP, simpleVnode(children))
 }
 
@@ -144,6 +154,7 @@ const updateHost = (WIP: IFiber): void => {
     WIP.node = createElement(WIP) as HTMLElementEx
   }
   // console.log('普通节点')
+  // console.log(WIP.props.children)
   diffKids(WIP, WIP.props.children)
 }
 
@@ -151,7 +162,9 @@ const simpleVnode = (type: any) =>{
   return isStr(type) ? createText(type as string) : type}
 
 const getParentNode = (WIP: IFiber): HTMLElement | undefined => {
+  // console.log('getParentNode', WIP)
   while ((WIP = WIP.parent)) {
+    // console.log('getParentNode2', WIP)
     if (!WIP.isComp) return WIP.node
   }
 }
@@ -168,7 +181,11 @@ export const getKid = (WIP: IFiber) => {
  */
 const diffKids = (WIP: any, children: FreNode): void => {
   // console.log('-----------开始diff------------')
-  // console.log(WIP)
+  // console.log(WIP.kids)
+  // console.log(children)
+  // if (WIP.kids && WIP.type == 'ul') {
+  //   return
+  // }
   let aCh = WIP.kids || [], // 首次进入时，WIP没有kids属性
     bCh = (WIP.kids = arrayfy(children) as any),
     aHead = 0,
@@ -176,21 +193,27 @@ const diffKids = (WIP: any, children: FreNode): void => {
     aTail = aCh.length - 1,
     bTail = bCh.length - 1,
     keyed = null
-
   while (aHead <= aTail && bHead <= bTail) {
     // 判断两个节点是否相同
     // 从后往前
     // 不相同 break 抛出
+    // console.log('判断相同a1')
     if (!same(aCh[aTail], bCh[bTail])) break
     // 相同的话走clone
-    // console.log('---------------相同----------------')
-    // console.log(aCh[aTail], bCh[bTail])
-    clone(aCh[aTail--], bCh[bTail], LANE.UPDATE, WIP, bTail--)
+    // console.log('---------------相同a1----------------')
+    /**
+     * 当节点相同时，直接替换
+     * 用新的props替换旧的props
+     */
+    clone(aCh[aTail], bCh[bTail], LANE.UPDATE, WIP, bTail--)
+    aTail--
   }
 
   while (aHead <= aTail && bHead <= bTail) {
     // 从前往后
+    // console.log('判断相同a2')
     if (!same(aCh[aHead], bCh[bHead])) break
+    // console.log('---------------相同a2----------------')
     // 相同的话向后进行
     aHead++; bHead++
   }
@@ -216,13 +239,16 @@ const diffKids = (WIP: any, children: FreNode): void => {
     if (!keyed) {
       keyed = {}
       for (let i = aHead; i <= aTail; i++) {
+        // console.log(aCh[i])
         let k = aCh[i].key || '.' + i
         if (k) keyed[k] = i
       }
     }
+    // console.log(keyed)
     while (bHead <= bTail) {
       let c = bCh[bTail]
       let idx = keyed[c.key || '.' + bTail]
+      // console.log('idx', idx)
       if (idx != null && same(c, aCh[idx])) {
         clone(aCh[idx], c, LANE.INSERT, WIP, bTail--)
         delete keyed[c.key]
@@ -262,15 +288,20 @@ function linke(kid, WIP, i) {
 function clone(a, b, lane, WIP, i) {
   b.oldProps = a.props
   b.node = a.node
+
   b.kids = a.kids
   b.hooks = a.hooks
   b.ref = a.ref
   b.lane = lane
+  // console.log('a', a.kids)
+  // console.log('b', b.kids)
+  // console.log(WIP)
   linke(b, WIP, i)
 }
 
 function invokeHooks(fiber) {
   const { hooks } = fiber
+  console.log(fiber)
   if (hooks) {
     side(hooks.layout)
     startTransition(() => side(hooks.effect))

@@ -6,30 +6,20 @@ import { render } from "../fre"
 import {h} from '../../fre-master/src'
 
 const App = () => {
-  // schedule(() => {
-  //   let list:any[] = []
-  //   for (let index = 0; index < 1000000; index++) {
-  //     list.push({id: index})
-  //   }
-  //   console.log('执行完毕a1')
-  //   console.log(performance.now())
-    
-  //   return () => {
-  //     // setTimeout(() => {
-  //       list.forEach(item => {
-  //         item.name = item.id + '小璐璐'
-  //       })
-  //       console.log('执行完毕a2')
-  //       console.log(performance.now())
-  //     // }, 100)
-  //   }
-  // })
-  // schedule(() => {
-  //   console.log('222')
-  // })
+  const list = [1,2,3,4,5]
 
   return (
-    <div>这是测试</div>
+    <div>
+      <div>这是测试</div>
+      <button>这是按钮</button>
+      <ul>
+        {
+          list.map(item => {
+            return <li>{item}</li>
+          })
+        }
+      </ul>
+    </div>
   )
 }
 
