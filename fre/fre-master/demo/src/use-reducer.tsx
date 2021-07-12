@@ -16,6 +16,10 @@ function Counter() {
     <div>
       <TestBtn color={'#bb4455'}/>
       <button onClick={() => dispatch({ type: 'create' })}>-</button>
+      <p>{data.data.length}</p>
+      {
+        data.data.length ? <p key="label">有值了</p> : <span key="label">没有值</span>
+      }
       <ul>
         {data.data.map(item => {
           const val = <p>hello</p>
