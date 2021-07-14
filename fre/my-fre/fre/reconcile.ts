@@ -8,8 +8,3 @@ export const render = (vnode: FreElement | any, node: Node, config?: any): void 
     props: { children: vnode },
   } as IFiber
 }
-
-export const test = <T, U>(first: T, second: U): T & U => {
-  let res = <T & U>{}
-  return res
-}
