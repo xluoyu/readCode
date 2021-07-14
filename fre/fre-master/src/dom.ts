@@ -26,6 +26,7 @@ export const updateElement = <P extends Attributes>(
     } else if (b == null || b === false) {
       dom.removeAttribute(name)
     } else {
+      console.log('Attri')
       dom.setAttribute(name, b)
     }
   }

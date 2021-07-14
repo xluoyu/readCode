@@ -51,7 +51,6 @@ const postMessage = (() => {
 })()
 
 const flush = (): void => {
-  console.log('切片循环')
   deadline = getTime() + threshold
   let job = peek(queue)
   while (job && !shouldYield()) {
