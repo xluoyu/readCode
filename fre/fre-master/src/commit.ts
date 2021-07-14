@@ -7,7 +7,7 @@ export const commit = (fiber: IFiber): void => {
   let d = fiber
   let e = d.e
   fiber.e = null
-  do {console.log(e); insert(e) } while (e = e.e)
+  do {insert(e) } while (e = e.e)
   while (d = d.d) remove(d)
   fiber.d = null
 }

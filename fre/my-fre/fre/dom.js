@@ -16,7 +16,10 @@ export const updateElement = (dom, oldProps, newProps) => {
       name = name.slice(2).toLowerCase()
       if (a) dom.removeEventListener(name, a)
       dom.addEventListener(name, b)
-    } else if (!b) {
+    } else if (name in dom) {
+      // 修改属性
+      dom[name] = b || ''
+    } else if (b) {
       dom.removeAttribute(name)
     } else {
       dom.setAttribute(name, b)

@@ -1,4 +1,7 @@
 import {schedule, shouldYield} from './schedule'
+import {createElement} from './dom'
+import {commit} from './commit'
+import { resetCursor} from './hook'
 
 let currentFiber = null
 let finish = null
@@ -9,7 +12,8 @@ export const type = {
   UPDATE: 'update',
   INSERT: 'insert',
   REMOVE: 'remove',
-  DIRTY: 'dirty'
+  DIRTY: 'dirty',
+  ROOT: 'root'
 }
 
 // 入口
@@ -27,6 +31,7 @@ export const render = (vnode, node) => {
  */
 export const update = (fiber) => {
   if (fiber) {
+    fiber.lane = type.ROOT
     schedule(() => {
       effect = detach = fiber
       reconcile(fiber)
@@ -38,19 +43,66 @@ const reconcile = (WIP) => {
   while(WIP && !shouldYield()) {
     WIP = capture(WIP)
   }
+  if (WIP) return reconcile.bind(null, WIP)
+  if (finish) {
+    commit(finish)
+    finish = null
+  }
+  return null
 }
 
 const capture = (WIP) => {
   WIP.isComp = isFn(WIP.type)
-  console.log(WIP)
   
   WIP.isComp ? updateHook(WIP): updateHost(WIP)
   if (WIP.child) return WIP.child
-  
+  while(WIP) {
+    bubble(WIP)
+    if (!finish && WIP.lane == type.ROOT) {
+      finish = WIP
+      WIP.lane = null
+      return null
+    }
+    if (WIP.sibling) return WIP.sibling
+    WIP = WIP.parent
+  }
 }
 
-const updateHook = (WIP) => {
+/**
+ * effect = root
+ * 遍历到没有子节点的节点时
+ * 在effect.e中储存本节点
+ * effect变为当前节点
+ * 
+ * 从root直到第一个没有子节点的节点，然后便利nextsibling
+ * 全部遍历完后，由最后一个节点向上便利
+ * lastWIP -> root
+ * 最后effect变为root
+ * 
+ * 
+ */
+const bubble = (WIP) => {
+  if (WIP.isComp) {
+    let kid = getKid(WIP)
+    if (kid) {
+      kid.s = WIP.sibling
+      kid.lane = WIP.lane
+    }
+    // inv
+  } else {
+    WIP.s = WIP.sibling
+    effect.e = WIP
+    effect = WIP
+  }
+}
 
+// 组件
+const updateHook = (WIP) => {
+  resetCursor()
+  currentFiber = WIP
+  // 执行组件方法
+  let children = WIP.type(WIP.props)
+  diffKids(WIP, children)
 }
 
 const updateHost = (WIP) => {
@@ -60,6 +112,9 @@ const updateHost = (WIP) => {
   }
   diffKids(WIP, WIP.props.children)
 }
+
+// const simpleVnode = (type) =>{
+//   return isStr(type) ? createText(type) : type}
 
 const diffKids = (WIP, children) => {
   let oldKids = WIP.kids || [],
@@ -77,7 +132,6 @@ const diffKids = (WIP, children) => {
   
   if (oldHead > oldTail) {
     while (newHead <= newTail) {
-      console.log('aHead > aTail && bHead <= bTail')
       // 新建节点
       let c = newKids[newTail]
       c.lane = type.INSERT
@@ -92,6 +146,14 @@ const getParentNode = (WIP) => {
     if (!WIP.isComp) return WIP.node
   }
 }
+
+export const getKid = (WIP) => {
+  while ((WIP = WIP.child)) {
+    if (!WIP.isComp) return WIP
+  }
+}
+
+export const getCurrentFiber = () => currentFiber || null
 
 const linke = (kid, WIP, i) => {
   kid.parent = WIP
@@ -114,7 +176,7 @@ const clone = (a, b, lane, WIP, i) => {
   linke(b, WIP, i)
 }
 
-const isFn = (obj) => typeof obj === "function"
-const isStr = (obj) => typeof obj === "string"
+export const isFn = (obj) => typeof obj === "function"
+export const isStr = (obj) => typeof obj === "string"
 const same = (a, b) => a && b && a.key === b.key && a.type === b.type
 const arrayfy = (obj) => !obj ? [] : Array.isArray(obj) ? obj : [obj]

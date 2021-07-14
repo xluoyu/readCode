@@ -1,6 +1,6 @@
 <mxfile>
     <diagram id="5ZAS_l4nIGbB4k-ydE7b" name="第 1 页">
-        <mxGraphModel dx="1497" dy="619" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1363" dy="573" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -35,6 +35,11 @@
                         <mxPoint x="240" y="452.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
+                <mxCell id="105" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="26" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2.5" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
                 <mxCell id="26" value="&lt;pre style=&quot;color: rgb(212 , 212 , 212) ; font-family: &amp;#34;consolas&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; font-size: 14px ; line-height: 19px&quot;&gt;reconcile&lt;/pre&gt;&lt;pre style=&quot;color: rgb(212 , 212 , 212) ; font-family: &amp;#34;consolas&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; font-size: 14px ; line-height: 19px&quot;&gt;循环dom节点&lt;/pre&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-60" y="415" width="125" height="75" as="geometry"/>
                 </mxCell>
@@ -48,13 +53,11 @@
                 <mxCell id="31" value="WIP为true，时间允许" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="1" vertex="1">
                     <mxGeometry x="75" y="415" width="130" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="43">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="460" y="980" as="targetPoint"/>
-                    </mxGeometry>
+                <mxCell id="104" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="43" target="73" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="43" value="节点循环capture" style="swimlane;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="380" width="440" height="555" as="geometry"/>
+                    <mxGeometry x="240" y="380" width="510" height="790" as="geometry"/>
                 </mxCell>
                 <mxCell id="56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="43" source="46" target="55" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -86,8 +89,26 @@
                 <mxCell id="70" value="没有子节点" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="43" vertex="1">
                     <mxGeometry x="250" y="315" width="80" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="71" value="" style="whiteSpace=wrap;html=1;" parent="43" vertex="1">
-                    <mxGeometry x="290" y="375" width="120" height="60" as="geometry"/>
+                <mxCell id="71" value="循环WIP&lt;br&gt;如果WIP为根节点时&lt;br&gt;return null" style="whiteSpace=wrap;html=1;" parent="43" vertex="1">
+                    <mxGeometry x="300" y="380" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="110" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="43" source="98" target="102" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="WIP有sibling" style="rhombus;whiteSpace=wrap;html=1;" parent="43" vertex="1">
+                    <mxGeometry x="315" y="560" width="90" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="有，返回sibling" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="43" vertex="1">
+                    <mxGeometry x="100" y="580" width="100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="没有&lt;br&gt;WIP = WIP.parent" style="whiteSpace=wrap;html=1;" parent="43" vertex="1">
+                    <mxGeometry x="300" y="710" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="43" source="107" target="98" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="&lt;div style=&quot;color: rgb(212 , 212 , 212) ; background-color: rgb(30 , 30 , 30) ; font-family: &amp;#34;consolas&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; font-size: 14px ; line-height: 19px&quot;&gt;&lt;span style=&quot;color: #dcdcaa&quot;&gt;bubble,记录当前节点&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="43" vertex="1">
+                    <mxGeometry x="310" y="480" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="44" value="时间切片" style="swimlane;" parent="1" vertex="1">
                     <mxGeometry x="-610" y="260" width="435" height="250" as="geometry"/>
@@ -132,7 +153,7 @@
                         <mxPoint x="320" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" edge="1">
+                <mxCell id="62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#F06262;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="26" y="487.5" as="targetPoint"/>
                         <mxPoint x="456" y="482.5" as="sourcePoint"/>
@@ -152,37 +173,135 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="73" value="diffKid" style="swimlane;" vertex="1" parent="1">
-                    <mxGeometry x="240" y="980" width="610" height="500" as="geometry">
+                <mxCell id="73" value="diffKid" style="swimlane;" parent="1" vertex="1">
+                    <mxGeometry x="190" y="1230" width="610" height="890" as="geometry">
                         <mxRectangle x="240" y="980" width="70" height="23" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="75" value="入口(节点对象，节点子集)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="73">
+                <mxCell id="75" value="入口(节点对象，节点子集)" style="rounded=0;whiteSpace=wrap;html=1;" parent="73" vertex="1">
                     <mxGeometry x="125" y="40" width="190" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="78" value="生成kids数组&lt;br&gt;children数组&lt;br&gt;aHead=0 //kids首位下标&lt;br&gt;aTail=kids.length-1 //kids末位下标&lt;br&gt;bHead=0 //children首位下标&lt;br&gt;bTail=children.length-1 //children末尾下标" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                <mxCell id="78" value="生成kids数组&lt;br&gt;children数组&lt;br&gt;aHead=0 //kids首位下标&lt;br&gt;aTail=kids.length-1 //kids末位下标&lt;br&gt;bHead=0 //children首位下标&lt;br&gt;bTail=children.length-1 //children末尾下标" style="whiteSpace=wrap;html=1;rounded=0;" parent="73" vertex="1">
                     <mxGeometry x="77.5" y="140" width="285" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="79" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="75" target="78">
+                <mxCell id="79" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="73" source="75" target="78" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="83" value="当kids与children都有一定值时(首位小于末尾)&lt;br&gt;从后往前循环&lt;br&gt;&lt;br&gt;" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                <mxCell id="83" value="当kids与children都有一定值时(首位小于末尾)&lt;br&gt;从后往前循环，标记更新&lt;br&gt;aTail--,bTail--&lt;br&gt;找到不同的节点，抛出" style="whiteSpace=wrap;html=1;rounded=0;" parent="73" vertex="1">
                     <mxGeometry x="75" y="300" width="290" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="84" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="78" target="83">
+                <mxCell id="84" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="73" source="78" target="83" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="82" value="&lt;span&gt;初始化时kids由children生成&lt;br&gt;后续更新时children最先获得改变。&lt;br&gt;根据children的数量与kids进行对比，&lt;br&gt;确认添加、删除节点标记.&lt;br&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="73">
+                <mxCell id="82" value="&lt;span&gt;初始化时kids由children生成&lt;br&gt;后续更新时children最先获得改变。&lt;br&gt;根据children的数量与kids进行对比，&lt;br&gt;确认添加、删除节点标记.&lt;br&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="73" vertex="1">
                     <mxGeometry x="400" y="100" width="210" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="78" target="82">
+                <mxCell id="85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="73" source="78" target="82" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="95" value="clone节点" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                <mxCell id="95" value="clone节点、修改props" style="whiteSpace=wrap;html=1;rounded=0;" parent="73" vertex="1">
                     <mxGeometry x="460" y="305" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="96" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="83" target="95">
+                <mxCell id="96" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="73" source="83" target="95" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="114" value="aHead &amp;gt; aTail &amp;amp; bHead &amp;lt;= bTail&lt;br&gt;有新的节点，标记添加" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                    <mxGeometry x="75" y="510" width="290" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="116" value="添加节点&lt;br&gt;子节点&amp;amp;&amp;amp;添加到子节点循环" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                    <mxGeometry x="460" y="425" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="114" target="116">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="bHead &amp;gt; bTail &amp;amp; aHead &amp;lt;= aTail&lt;br&gt;有节点被删除，标记删除" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                    <mxGeometry x="77" y="640" width="285" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="114" target="118">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="73" source="120" target="95">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="如果bHead还有值，&lt;br&gt;剩余的表示为与旧节点相同，走clone" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                    <mxGeometry x="80" y="770" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="118" target="120">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="73" source="122" target="114">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="从前往后循环&lt;br&gt;aHead++，bHead++&lt;br&gt;找到不同的节点，抛出" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="73">
+                    <mxGeometry x="104.5" y="400" width="230" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="73" source="83" target="122">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#F05959;" parent="1" source="98" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="180" y="730" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="103" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="102" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="660" y="790" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="710" y="790"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="112" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="106" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2.5" y="920" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="106" value="commit" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-57.5" y="780" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="71" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="600" y="850" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="111" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#46BDF0;" parent="1" source="107" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="880" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="126" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="113">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="1030" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="113" value="对记录的节点进行遍历" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-60" y="930" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="127" value="对diff时打上的标记进行判断&lt;br&gt;执行添加、更新、删除操作" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-150" y="1040" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="46">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-401.20001220703125" y="660" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="130" value="Hook" style="swimlane;" vertex="1" parent="1">
+                    <mxGeometry x="-620" y="660" width="440" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="131" value="执行组件方法时的Hook操作" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="130">
+                    <mxGeometry x="278" y="35" width="160" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="136" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="130" source="132" target="135">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="132" value="初始化，cursor=0" style="whiteSpace=wrap;html=1;" vertex="1" parent="130">
+                    <mxGeometry x="160" y="50" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="133" value="useState(initState)" style="whiteSpace=wrap;html=1;" vertex="1" parent="130">
+                    <mxGeometry x="20" y="230" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="135" value="与组件绑定Hooks&lt;br&gt;{list:[],effect:[],layout:[]}" style="whiteSpace=wrap;html=1;" vertex="1" parent="130">
+                    <mxGeometry x="123" y="150" width="194" height="50" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

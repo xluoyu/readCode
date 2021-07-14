@@ -91,17 +91,13 @@ const reconcile = (WIP?: IFiber): boolean => {
  * 没有子节点
  */
 const capture = (WIP: IFiber): IFiber | undefined => {
-  // console.log(WIP)
   WIP.isComp = isFn(WIP.type)
   // 执行不同操作
   WIP.isComp ? updateHook(WIP) : updateHost(WIP)
-  console.log('WIPChild', WIP)
   if (WIP.child) return WIP.child
   // console.log(WIP)
-  console.log('bubbleAfter', WIP)
 
   while (WIP) {
-    console.log('bubble', WIP)
     bubble(WIP)
     if (!finish && WIP.lane & LANE.DIRTY) {
       finish = WIP 
@@ -114,15 +110,12 @@ const capture = (WIP: IFiber): IFiber | undefined => {
 }
 
 const bubble = (WIP) => {
-  console.log('effect', effect)
-  console.log('---------------------')
   if (WIP.isComp) {
     let kid = getKid(WIP)
     if (kid) {
       kid.s = WIP.sibling
       kid.lane |= WIP.lane
     }
-    console.log('组件', kid)
     invokeHooks(WIP)
   } else {
     WIP.s = WIP.sibling
@@ -302,7 +295,7 @@ function clone(a, b, lane, WIP, i) {
 
 function invokeHooks(fiber) {
   const { hooks } = fiber
-  console.log(fiber)
+  // console.log(hooks)
   if (hooks) {
     side(hooks.layout)
     startTransition(() => side(hooks.effect))
