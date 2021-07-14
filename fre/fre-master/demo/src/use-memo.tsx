@@ -1,12 +1,14 @@
-import { render, useState, useMemo, useEffect } from '../../src/index'
+import { render, h,useState, useMemo, useEffect } from '../../src/index'
+let test = [1,2,3]
 
 function Counter() {
   const [count, setCount] = useState(0)
-  const one = useMemo(() => 1, [])
-
+  let one = useMemo(() => 1, test)
   console.log(one)
+
   useEffect(() => {
     console.log(111)
+    test.push(test.length + 1)
   })
   return (
     <div>

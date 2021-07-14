@@ -2,8 +2,7 @@
 // import {render, h} from '../../fre-master/src/index'
 
 // import { schedule } from '../fre/schedule'
-import { render, useState } from "../fre"
-import {h} from '../../fre-master/src'
+import { render,h, useState, useMemo } from "../../src/index"
 
 const Child = () => {
   console.log('child')
@@ -11,7 +10,7 @@ const Child = () => {
   return (
     <div>
       <p>这里是子组件哦{count}</p>
-      <button onClick={() => {setCount(count+1)}}>点我</button>
+      <button onClick={() => {setCount(count +1 )}}>点我</button>
     </div>
   )
 }
@@ -39,5 +38,5 @@ const App = () => {
 
 render(
   <App />,
-  document.getElementById('root') as Node
+  document.getElementById("app")
 )

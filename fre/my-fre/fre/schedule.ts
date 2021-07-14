@@ -27,9 +27,6 @@ const postMessage = (() => {
 })()
 
 const flush = () => {
-  console.log('开始执行')
-  console.log(performance.now())
-
   deadline = getTime() + oneFrame
   let job = queue[0]
   while (job && !shouldYield()) {
@@ -47,4 +44,4 @@ const flush = () => {
 }
 
 // 用户在输入 或 执行时间大于一帧，返回true 须停止后续操作
-const shouldYield = ():boolean => (navigator as any)?.scheduling?.isInputPending() || getTime() >= deadline
+export const shouldYield = ():boolean => (navigator as any)?.scheduling?.isInputPending() || getTime() >= deadline
