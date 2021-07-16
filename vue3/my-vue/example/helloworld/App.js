@@ -10,20 +10,32 @@ const Child =  {
       console.log(`count改变了 watchEffect`, count.value)
     })
 
-    watch(count, (count, prevCount) => {
-      console.log('--------- watch ----------')
-      console.log(`count改变了 watch`, count)
-      console.log(`之前的值是`, prevCount)
-    })
-
+    const setCount = (newVal) => {
+      console.log(newVal)
+      count.value = newVal
+    }
     window.count = count
+    // watch(count, (count, prevCount) => {
+    //   console.log('--------- watch ----------')
+    //   console.log(`count改变了 watch`, count)
+    //   console.log(`之前的值是`, prevCount)
+    // })
     return {
-      count
+      count,
+      setCount
     }
   },
   render(context) {
     console.log(context)
-    return h('div', {class: 'child-item'}, `当前count: ${context.count.value}`)
+    return h('div', {class: 'child-item'}, [
+      h('button', {
+        onClick: () => {
+          console.log('执行了')
+          context.setCount(context.count.value + 1)
+        }
+      }, '这是副标题'),
+        h('p', {}, `当前count: ${context.count.value}`)
+      ])
   },
 }
 

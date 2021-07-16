@@ -1,14 +1,13 @@
 import { Deps } from './deps';
 
-let currentHook = null
-let currentComponent = null
+let currentHook: Function | null = null
 
 export const ref = (initState) => {
-  let dep = new Deps(initState, currentComponent)
+  let dep = new Deps(initState)
   return dep
 }
 
-export const watch = (obj, cb) => {
+export const watch = (obj: () => any, cb: any) => {
   let key
   if (isFn(obj)) {
     key = obj()
@@ -19,7 +18,7 @@ export const watch = (obj, cb) => {
 export const watchEffect = (cb) => {
   currentHook = cb
   cb()
-  currentHook = null
+  // currentHook = null
 }
 
 export const getCurrent = () => currentHook
