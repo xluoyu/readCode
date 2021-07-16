@@ -7,7 +7,8 @@ export interface IvNode {
 
 export interface IVueComponent {
   setup?: Function,
-  render: Function
+  render: Function,
+  oldTree?: IvNode | null
 }
 
 export interface ICurTree extends IvNode{

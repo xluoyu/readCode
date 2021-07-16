@@ -2,11 +2,9 @@ import {getCurrent} from './index'
 
 export class Deps {
   private _val: any
-  effects: Set<unknown>
-  private _component: any
-  constructor (val: any, currentComponent) {
+  effects: Set<Function>
+  constructor (val: any) {
     this._val = val
-    this._component = currentComponent
     this.effects = new Set()
   }
   get value () {
@@ -24,10 +22,9 @@ export class Deps {
       this.effects.add(currentHook)
     }
   }
-
+  
   // 触发更新
   notice() {
-    console.log(this.effects)
     this.effects.forEach((item) => {
       item()
     })
