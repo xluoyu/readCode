@@ -3,7 +3,7 @@ let test = [1,2,3]
 
 function Counter() {
   const [count, setCount] = useState(0)
-  let one = useMemo(() => 1, test)
+  let one = useMemo(() => test.join('.'), test)
   console.log(one)
 
   useEffect(() => {
