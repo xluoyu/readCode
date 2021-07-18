@@ -4,7 +4,7 @@
 // import { schedule } from '../fre/schedule'
 import { render,h, useState, useMemo } from "../../src/index"
 
-const Child = () => {
+const Child = useMemo(() => {
   console.log('child')
   let [count, setCount] = useState(1)
   return (
@@ -13,7 +13,7 @@ const Child = () => {
       <button onClick={() => {setCount(count +1 )}}>点我</button>
     </div>
   )
-}
+}, null)
 
 const App = () => {
   const [list, setList] = useState([1,2,3])
