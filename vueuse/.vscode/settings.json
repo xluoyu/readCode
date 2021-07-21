@@ -1,0 +1,25 @@
+{
+  "cSpell.words": [
+    "Demi",
+    "Unsubscribable",
+    "iframes",
+    "vueuse"
+  ],
+  "prettier.enable": false,
+  "grammarly.userWords": [
+    "VueUse",
+    "composables",
+    "destructurable",
+    "github",
+    "isSupported",
+    "monorepo",
+    "prepublish",
+    "vue"
+  ],
+  "volar.tsPlugin": true,
+  "vite.vitepress": true,
+  "vite.vitepressBase": "packages",
+  "vite.vitepressAutoRouting": true,
+  "vite.buildCommand": "npm run docs:build",
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
