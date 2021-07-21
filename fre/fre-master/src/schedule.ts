@@ -11,14 +11,13 @@
  * 在循环结束时，再次添加flush，开启下一次循环
  */
 
-import { IFiber, ITask, ITaskCallback } from "./type"
+import { ITask } from "./type"
 import { options } from "./reconcile"
 
 const queue: ITask[] = []
 const threshold: number = 1000 / 60 // 1帧
 const transitions = []
 let deadline: number = 0
-
 
 // 在transitions中添加回调
 export const startTransition = (cb) => {
