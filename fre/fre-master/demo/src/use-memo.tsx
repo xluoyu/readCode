@@ -3,19 +3,24 @@ let test = [1,2,3]
 
 function Counter() {
   const [count, setCount] = useState(0)
-  let one = useMemo(() => test.join('.'), test)
-  console.log(one)
+  const [age, setAge] = useState([1,2,3])
+  let one = useMemo(() => {
+    console.log('执行callback')
+    return age
+  }, [age])
 
-  useEffect(() => {
-    console.log(111)
-    test.push(test.length + 1)
-  })
+  // useEffect(() => {
+  //   test.push(test.length + 1)
+  //   console.log('test被改变了')
+  // }, [count])
+
   return (
     <div>
       <h1>
         {count}-{one}
       </h1>
-      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count + 1)}>+count</button>
+      <button onClick={() => {setAge(age.concat(age.length + 1))}}>+age</button>
     </div>
   )
 }

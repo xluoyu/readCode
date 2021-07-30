@@ -66,12 +66,10 @@ export const useMemo = <S = Function>(
   deps?: DependencyList
 ): S => {
   const hook = getHook<S>(cursor++)[0]
-  console.log(hook[1], deps)
   if (isChanged(hook[1], deps!)) {
     hook[1] = deps
     return (hook[0] = cb())
   }
-  console.log(hook)
   return hook[0]
 }
 
@@ -90,6 +88,7 @@ export const getHook = <S = Function | undefined, Dependency = any>(
   cursor: number
 ): [[S, Dependency], IFiber] => {
   const current: IFiber<any> = getCurrentFiber()
+  console.log(cursor, current)
   const hooks =
     current.hooks || (current.hooks = { list: [], effect: [], layout: [] })
   if (cursor >= hooks.list.length) {
