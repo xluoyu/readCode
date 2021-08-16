@@ -2,7 +2,7 @@ import { Deps } from './deps';
 
 let currentHook: Function | null = null
 
-export const ref = (initState) => {
+export const ref = (initState: any) => {
   let dep = new Deps(initState)
   return dep
 }

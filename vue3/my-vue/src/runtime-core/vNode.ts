@@ -5,6 +5,13 @@ import {scheduler} from './scheduler'
 export function runComponent(component: IVueComponent, rootEl: HTMLElement | undefined) {
   
   let rootContext = component.setup ? component.setup() : {}
+  typeof rootContext == 'object' && Object.keys(rootContext).forEach((key) => {
+    if (component[key]) {
+      throw new Error('重复的属性')
+    }
+    component[key] = rootContext[key]
+  })
+
   component.oldTree = null
   
   watchEffect(() => {
@@ -18,11 +25,13 @@ export function runComponent(component: IVueComponent, rootEl: HTMLElement | und
   })
 }
 
+// diff算法
 export function patch(n1, n2, component, rootEl) {
   if (!n1) {
     vNode(n2, component, rootEl)
     return
   } else {
+    console.log(n1, n2)
     // 节点对比
     if (typeof n2.type === 'string' && n1.type !== n2.type) {
       rootEl.innerHTML = ''
@@ -82,7 +91,6 @@ export function vNode (curTree: ICurTree, component: IVueComponent, el: HTMLElem
 }
 
 const diffProps = (oldProps, newProps, el) => {
-  console.log(oldProps, newProps)
   if (newProps) {
     Object.keys(newProps).forEach((key) => {
       if (newProps[key] !== oldProps[key]) {

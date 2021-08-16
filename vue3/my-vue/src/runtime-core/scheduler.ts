@@ -16,7 +16,6 @@ const flush = () => {
     // 可执行
     const {cb} = job
     job.cb = null
-    console.log(cb)
     const next = cb()
     if (next) {
       job.cb = next
