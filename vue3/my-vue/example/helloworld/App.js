@@ -25,16 +25,15 @@ const Child =  {
       setCount
     }
   },
-  render(context) {
-    console.log(context)
+  render() {
     return h('div', {class: 'child-item'}, [
       h('button', {
         onClick: () => {
           console.log('执行了')
-          context.setCount(context.count.value + 1)
+          this.setCount(this.count.value + 1)
         }
       }, '这是副标题'),
-        h('p', {}, `当前count: ${context.count.value}`)
+        h('p', {}, `当前count: ${this.count.value}`)
       ])
   },
 }
