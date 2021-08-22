@@ -1,0 +1,3 @@
+[submodule "vue3-ui/naive-ui"]
+	path = vue3-ui/naive-ui
+	url = https://github.com/xluoyu/naive-ui.git
