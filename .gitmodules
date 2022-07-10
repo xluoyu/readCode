@@ -1,3 +1,12 @@
+<<<<<<< HEAD
 [submodule "vue3-ui/naive-ui"]
 	path = vue3-ui/naive-ui
 	url = https://github.com/xluoyu/naive-ui.git
+=======
+[submodule ".\\vue3-ui\\naive-ui"]
+	path = .\\vue3-ui\\naive-ui
+	url = https://github.com/xluoyu/naive-ui.git
+[submodule ".\\vue3-ui\\element-plus\\"]
+	path = .\\vue3-ui\\element-plus\\
+	url = https://github.com/xluoyu/element-plus.git
+>>>>>>> f06041f655caefabacd35716d6cd35c752fd0f1f
